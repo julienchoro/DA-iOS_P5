@@ -27,9 +27,9 @@ class AuthenticationViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var token: String?
     
-    let onLoginSucceed: (() -> ())
+    let onLoginSucceed: ((_ token: String) -> ())
     
-    init(_ callback: @escaping () -> ()) {
+    init(_ callback: @escaping (String) -> ()) {
         self.onLoginSucceed = callback
     }
     
@@ -98,7 +98,7 @@ class AuthenticationViewModel: ObservableObject {
                     let authResponse = try JSONDecoder().decode(AuthResponse.self, from: data)
                     print("Login successful! Token: \(authResponse.token)")
                     self.token = authResponse.token
-                    self.onLoginSucceed()
+                    self.onLoginSucceed(authResponse.token)
                 } catch {
                     self.errorMessage = genericErrorMessage
                 }
