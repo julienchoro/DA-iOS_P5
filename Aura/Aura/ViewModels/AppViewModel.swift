@@ -16,6 +16,7 @@ class AppViewModel: ObservableObject {
         isLogged = false
     }
     
+    // View model that manages authentication state and user token
     var authenticationViewModel: AuthenticationViewModel {
         return AuthenticationViewModel { [weak self] token in
             self?.isLogged = true
@@ -23,10 +24,20 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    // View model that manages account details and balance
     var accountDetailViewModel: AccountDetailViewModel {
         guard let authToken = authToken else {
             fatalError("Attempting to access accountDetailViewModel when not logged in")
         }
         return AccountDetailViewModel(authToken: authToken)
     }
+
+    // View model that manages money transfer functionality
+    var moneyTransferViewModel: MoneyTransferViewModel {
+        guard let authToken = authToken else {
+            fatalError("Attempting to access moneyTransferViewModel when not logged in")
+        }
+        return MoneyTransferViewModel(authToken: authToken)
+    }
+    
 }

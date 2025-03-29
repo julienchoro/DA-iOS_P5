@@ -22,6 +22,7 @@
 		F9A8FEB02D988B5700E76E23 /* AllTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8FEAF2D988B5700E76E23 /* AllTransactionsView.swift */; };
 		F9A8FEB22D988B6500E76E23 /* AllTransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8FEB12D988B6500E76E23 /* AllTransactionsViewModel.swift */; };
 		F9A8FEB82D988D3D00E76E23 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8FEB72D988D3D00E76E23 /* Models.swift */; };
+		F9A8FEBC2D98AA4100E76E23 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8FEBB2D98AA4100E76E23 /* Validation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		F9A8FEAF2D988B5700E76E23 /* AllTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsView.swift; sourceTree = "<group>"; };
 		F9A8FEB12D988B6500E76E23 /* AllTransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsViewModel.swift; sourceTree = "<group>"; };
 		F9A8FEB72D988D3D00E76E23 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		F9A8FEBB2D98AA4100E76E23 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			children = (
 				53D418982AC70FD80070ADB1 /* Color+Extensions.swift */,
 				53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */,
+				F9A8FEBB2D98AA4100E76E23 /* Validation.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */,
 				53D4189D2AC715AA0070ADB1 /* AccountDetailViewModel.swift in Sources */,
 				53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */,
+				F9A8FEBC2D98AA4100E76E23 /* Validation.swift in Sources */,
 				53D418932AC70AB10070ADB1 /* AccountDetailView.swift in Sources */,
 				53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */,
 				F9A8FEB22D988B6500E76E23 /* AllTransactionsViewModel.swift in Sources */,

@@ -29,3 +29,9 @@ struct Transaction: Decodable {
     let value: Decimal
     let label: String
 }
+
+// Structure for encoding the money transfer request body
+struct TransferRequest: Encodable {
+    let recipient: String
+    let amount: Decimal
+}

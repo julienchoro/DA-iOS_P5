@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoneyTransferView: View {
-    @ObservedObject var viewModel = MoneyTransferViewModel()
+        @ObservedObject var viewModel : MoneyTransferViewModel
 
         @State private var animationScale: CGFloat = 1.0
 
@@ -67,8 +67,10 @@ struct MoneyTransferView: View {
                 // Message
                 if !viewModel.transferMessage.isEmpty {
                     Text(viewModel.transferMessage)
+                        .foregroundColor(.red)
                         .padding(.top, 20)
                         .transition(.move(edge: .top))
+                        .multilineTextAlignment(.center)
                 }
                 
                 Spacer()
@@ -82,5 +84,5 @@ struct MoneyTransferView: View {
 
 
 #Preview {
-    MoneyTransferView()
+    MoneyTransferView(viewModel: MoneyTransferViewModel(authToken: "preview-token"))
 }
