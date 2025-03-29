@@ -16,11 +16,13 @@ struct AuraApp: App {
             Group {
                 if viewModel.isLogged {
                     TabView {
-                        AccountDetailView(viewModel: viewModel.accountDetailViewModel)
-                            .tabItem {
-                                Image(systemName: "person.crop.circle")
-                                Text("Account")
-                            }
+                        NavigationView {
+                            AccountDetailView(viewModel: viewModel.accountDetailViewModel)
+                        }
+                        .tabItem {
+                            Image(systemName: "person.crop.circle")
+                            Text("Account")
+                        }
                         
                         MoneyTransferView()
                             .tabItem {

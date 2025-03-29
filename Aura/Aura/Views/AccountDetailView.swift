@@ -49,10 +49,8 @@ struct AccountDetailView: View {
                 }
             }
             
-            // Button to see details of transactions
-            Button(action: {
-                // Implement action to show transaction details
-            }) {
+            // NavigationLink to see details of transactions
+            NavigationLink(destination: AllTransactionsView(viewModel: AllTransactionsViewModel(authToken: viewModel.authToken))) {
                 HStack {
                     Image(systemName: "list.bullet")
                     Text("See Transaction Details")

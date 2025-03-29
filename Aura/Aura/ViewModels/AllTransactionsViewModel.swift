@@ -1,69 +1,69 @@
 //
-//  AccountDetailViewModel.swift
+//  AllTransactionsViewModel.swift
 //  Aura
 //
-//  Created by Vincent Saluzzo on 29/09/2023.
+//  Created by Julien Choromanski on 29/03/2025.
 //
 
 import Foundation
 
 @MainActor
-class AccountDetailViewModel: ObservableObject {
-
-    @Published var totalAmount: String = ""
-    @Published var recentTransactions: [Transaction] = []
+class AllTransactionsViewModel: ObservableObject {
+    // Published properties for UI updates
+    @Published var allTransactions: [Transaction] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-
-    let authToken: String
-
+    
+    private let authToken: String
+    
     init(authToken: String) {
         self.authToken = authToken
-        fetchAccountDetails()
+        fetchAllTransactions()
     }
-
-    func fetchAccountDetails() {
+    
+    // Fetches all transactions from the backend API
+    func fetchAllTransactions() {
         isLoading = true
         errorMessage = nil
-        print("Fetching account details...")
-
+        print("Fetching all transactions...")
+        
         Task {
+            
             do {
+                // Configure and validate API endpoint
                 guard let accountURL = URL(string: "http://127.0.0.1:8080/account") else {
                     errorMessage = "Invalid API endpoint configuration."
-                    isLoading = false
+                    print("Error: Invalid URL")
                     return
                 }
-
+                
+                // Prepare authenticated request
                 var request = URLRequest(url: accountURL)
                 request.setValue(authToken, forHTTPHeaderField: "token")
                 request.httpMethod = "GET"
-
+                
                 let (data, response) = try await URLSession.shared.data(for: request)
-
+                
+                // Validate HTTP response
                 guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                    print("Error: Invalid response or status code from /account")
+                    print("Error: Invalid response or status code from /account. Status: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
                     throw URLError(.badServerResponse)
                 }
-
+                
+                // Decode response and update transactions
                 let decodedAccountDetails = try JSONDecoder().decode(AccountDetails.self, from: data)
-
-                self.totalAmount = decodedAccountDetails.currentBalance.formatted(.currency(code: "EUR"))
-                print("Account balance fetched: \(decodedAccountDetails.currentBalance)")
-
-                self.recentTransactions = Array(decodedAccountDetails.transactions.prefix(3))
-                print("Recent transactions processed: \(self.recentTransactions.count) items")
-
+                self.allTransactions = decodedAccountDetails.transactions
+                print("All transactions fetched successfully: \(self.allTransactions.count) items")
+                
             } catch {
-
-                errorMessage = "Failed to load account data. Please try again."
-                print("Error fetching account details: \(error)")
-
+                errorMessage = "Failed to load transaction history. Please try again."
+                print("Error fetching all transactions: \(error)")
+                
                 if let decodingError = error as? DecodingError {
                     print("Decoding error details: \(decodingError)")
                 }
             }
-            
+
             isLoading = false
             print("Fetching complete.")
         }

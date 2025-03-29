@@ -7,17 +7,6 @@
 
 import Foundation
 
-// Structure pour décoder la réponse JSON
-struct AuthResponse: Decodable {
-    let token: String
-}
-
-// Structure pour encoder le corps de la requête JSON
-struct AuthRequest: Encodable {
-    let username: String
-    let password: String
-}
-
 // ViewModel gérant l'authentification de l'utilisateur
 class AuthenticationViewModel: ObservableObject {
     // Données de l'utilisateur
