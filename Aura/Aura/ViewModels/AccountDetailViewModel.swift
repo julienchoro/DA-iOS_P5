@@ -5,23 +5,31 @@
 //  Created by Vincent Saluzzo on 29/09/2023.
 //
 
+
 import Foundation
+
 
 @MainActor
 class AccountDetailViewModel: ObservableObject {
 
+    // Published properties for UI updates
     @Published var totalAmount: String = ""
     @Published var recentTransactions: [Transaction] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
+    // Properties for authentication and service
     let authToken: String
-
-    init(authToken: String) {
+    private let accountService: AccountServiceProtocol
+    
+    // Initializer
+    init(authToken: String, service: AccountServiceProtocol = AccountService()) {
         self.authToken = authToken
+        self.accountService = service
         fetchAccountDetails()
     }
 
+    // Function to fetch account details
     func fetchAccountDetails() {
         isLoading = true
         errorMessage = nil
@@ -29,33 +37,18 @@ class AccountDetailViewModel: ObservableObject {
 
         Task {
             do {
-                guard let accountURL = URL(string: "http://127.0.0.1:8080/account") else {
-                    errorMessage = "Invalid API endpoint configuration."
-                    isLoading = false
-                    return
-                }
+                let accountDetails = try await accountService.fetchAccountDetails(token: authToken)
+                
+                self.totalAmount = accountDetails.currentBalance.formatted(.currency(code: "EUR"))
+                print("Account balance fetched: \(accountDetails.currentBalance)")
 
-                var request = URLRequest(url: accountURL)
-                request.setValue(authToken, forHTTPHeaderField: "token")
-                request.httpMethod = "GET"
-
-                let (data, response) = try await URLSession.shared.data(for: request)
-
-                guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                    print("Error: Invalid response or status code from /account")
-                    throw URLError(.badServerResponse)
-                }
-
-                let decodedAccountDetails = try JSONDecoder().decode(AccountDetails.self, from: data)
-
-                self.totalAmount = decodedAccountDetails.currentBalance.formatted(.currency(code: "EUR"))
-                print("Account balance fetched: \(decodedAccountDetails.currentBalance)")
-
-                self.recentTransactions = Array(decodedAccountDetails.transactions.prefix(3))
+                self.recentTransactions = Array(accountDetails.transactions.prefix(3))
                 print("Recent transactions processed: \(self.recentTransactions.count) items")
 
+            } catch let error as AuthError where error == .invalidToken {
+                errorMessage = "Authentication error. Please login again."
+                print("Authentication error: Invalid token")
             } catch {
-
                 errorMessage = "Failed to load account data. Please try again."
                 print("Error fetching account details: \(error)")
 

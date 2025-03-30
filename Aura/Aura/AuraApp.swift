@@ -5,7 +5,9 @@
 //  Created by Vincent Saluzzo on 29/09/2023.
 //
 
+
 import SwiftUI
+
 
 @main
 struct AuraApp: App {
@@ -14,8 +16,11 @@ struct AuraApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
+                // Check if the user is logged in
                 if viewModel.isLogged {
+                    // If logged in, show the tab view
                     TabView {
+                        // Account detail view
                         NavigationView {
                             AccountDetailView(viewModel: viewModel.accountDetailViewModel)
                         }
@@ -24,6 +29,7 @@ struct AuraApp: App {
                             Text("Account")
                         }
                         
+                        // Money transfer view
                         MoneyTransferView(viewModel: viewModel.moneyTransferViewModel)
                             .tabItem {
                                 Image(systemName: "arrow.right.arrow.left.circle")
@@ -32,6 +38,7 @@ struct AuraApp: App {
                     }
                     
                 } else {
+                    // If not logged in, show the authentication view
                     AuthenticationView(viewModel: viewModel.authenticationViewModel)
                         .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
                                                 removal: .move(edge: .top).combined(with: .opacity)))

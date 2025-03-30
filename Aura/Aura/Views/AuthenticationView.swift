@@ -61,7 +61,9 @@ struct AuthenticationView: View {
                         .padding(.top, 10)
                 } else {
                     Button(action: {
-                        viewModel.login()
+                        Task {
+                            await viewModel.login()
+                        }
                     }) {
                         Text("Log in")
                             .foregroundColor(.white)

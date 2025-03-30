@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 @MainActor
 class AppViewModel: ObservableObject {
     @Published var isLogged: Bool
