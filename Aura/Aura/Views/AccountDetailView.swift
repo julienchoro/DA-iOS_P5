@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AccountDetailView: View {
     @ObservedObject var viewModel: AccountDetailViewModel
+    @State private var showingAllTransactions = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -49,13 +50,13 @@ struct AccountDetailView: View {
                 }
             }
             
-            // Button to see details of transactions
+            // Button to show modal with all transactions
             Button(action: {
-                // Implement action to show transaction details
+                showingAllTransactions = true
             }) {
                 HStack {
                     Image(systemName: "list.bullet")
-                    Text("See Transaction Details")
+                    Text("See all transactions")
                 }
                 .padding()
                 .background(Color(hex: "#94A684"))
@@ -63,6 +64,9 @@ struct AccountDetailView: View {
                 .cornerRadius(8)
             }
             .padding([.horizontal, .bottom])
+            .sheet(isPresented: $showingAllTransactions) {
+                AllTransactionsView()
+            }
             
             Spacer()
         }
