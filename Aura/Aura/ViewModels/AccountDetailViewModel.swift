@@ -8,15 +8,32 @@
 import Foundation
 
 class AccountDetailViewModel: ObservableObject {
-    @Published var totalAmount: String = "€12,345.67"
-    @Published var recentTransactions: [Transaction] = [
-        Transaction(description: "Starbucks", amount: "-€5.50"),
-        Transaction(description: "Amazon Purchase", amount: "-€34.99"),
-        Transaction(description: "Salary", amount: "+€2,500.00")
-    ]
+    @Published var totalAmount = "€0.00"
+    @Published var recentTransactions: [Transaction] = []
     
-    struct Transaction {
-        let description: String
-        let amount: String
+    init() {
+        fetchAccountData()
+    }
+    
+    func fetchAccountData() {
+        Task {
+            guard let token = APIService.shared.authToken else { return }
+            
+            let url = URL(string: "http://127.0.0.1:8080/account")!
+            var request = URLRequest(url: url)
+            request.setValue(token, forHTTPHeaderField: "token")
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                let response = try JSONDecoder().decode(AccountResponse.self, from: data)
+                
+                await MainActor.run {
+                    totalAmount = "€\(response.currentBalance)"
+                    recentTransactions = Array(response.transactions.prefix(3))
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        }
     }
 }

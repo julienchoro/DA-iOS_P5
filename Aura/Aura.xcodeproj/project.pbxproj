@@ -22,6 +22,8 @@
 		55B32F072E5232B4006DFA12 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F062E5232B3006DFA12 /* AuthenticationRequest.swift */; };
 		55B32F092E5232CC006DFA12 /* AuthenticationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F082E5232CC006DFA12 /* AuthenticationResponse.swift */; };
 		55B32F0B2E5236EC006DFA12 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F0A2E5236EC006DFA12 /* APIService.swift */; };
+		55B32F0E2E523A47006DFA12 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F0D2E523A47006DFA12 /* Transaction.swift */; };
+		55B32F0F2E523A47006DFA12 /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F0C2E523A47006DFA12 /* AccountResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		55B32F062E5232B3006DFA12 /* AuthenticationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRequest.swift; sourceTree = "<group>"; };
 		55B32F082E5232CC006DFA12 /* AuthenticationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationResponse.swift; sourceTree = "<group>"; };
 		55B32F0A2E5236EC006DFA12 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		55B32F0C2E523A47006DFA12 /* AccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponse.swift; sourceTree = "<group>"; };
+		55B32F0D2E523A47006DFA12 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 		53D4188B2AC709B80070ADB1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55B32F0C2E523A47006DFA12 /* AccountResponse.swift */,
+				55B32F0D2E523A47006DFA12 /* Transaction.swift */,
 				55B32F062E5232B3006DFA12 /* AuthenticationRequest.swift */,
 				55B32F082E5232CC006DFA12 /* AuthenticationResponse.swift */,
 			);
@@ -212,6 +218,8 @@
 			files = (
 				53D4187C2AC7099A0070ADB1 /* AuraApp.swift in Sources */,
 				53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */,
+				55B32F0E2E523A47006DFA12 /* Transaction.swift in Sources */,
+				55B32F0F2E523A47006DFA12 /* AccountResponse.swift in Sources */,
 				53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */,
 				53D4189D2AC715AA0070ADB1 /* AccountDetailViewModel.swift in Sources */,
 				53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */,

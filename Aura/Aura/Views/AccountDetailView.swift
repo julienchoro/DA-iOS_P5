@@ -32,15 +32,15 @@ struct AccountDetailView: View {
                 Text("Recent Transactions")
                     .font(.headline)
                     .padding([.horizontal])
-                ForEach(viewModel.recentTransactions, id: \.description) { transaction in
+                ForEach(viewModel.recentTransactions) { transaction in
                     HStack {
-                        Image(systemName: transaction.amount.contains("+") ? "arrow.up.right.circle.fill" : "arrow.down.left.circle.fill")
-                            .foregroundColor(transaction.amount.contains("+") ? .green : .red)
-                        Text(transaction.description)
+                        Image(systemName: transaction.value >= 0 ? "arrow.up.right.circle.fill" : "arrow.down.left.circle.fill")
+                            .foregroundColor(transaction.value >= 0 ? .green : .red)
+                        Text(transaction.label)
                         Spacer()
-                        Text(transaction.amount)
+                        Text("€\(transaction.value)")
                             .fontWeight(.bold)
-                            .foregroundColor(transaction.amount.contains("+") ? .green : .red)
+                            .foregroundColor(transaction.value >= 0 ? .green : .red)
                     }
                     .padding()
                     .background(Color.gray.opacity(0.1))
