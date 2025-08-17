@@ -26,6 +26,7 @@
 		55B32F0F2E523A47006DFA12 /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F0C2E523A47006DFA12 /* AccountResponse.swift */; };
 		55B32F172E523C08006DFA12 /* AllTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F162E523C08006DFA12 /* AllTransactionsView.swift */; };
 		55B32F192E523C1E006DFA12 /* AllTransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F182E523C1E006DFA12 /* AllTransactionsViewModel.swift */; };
+		55B32F1B2E523E4D006DFA12 /* TransferRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B32F1A2E523E4D006DFA12 /* TransferRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		55B32F0D2E523A47006DFA12 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		55B32F162E523C08006DFA12 /* AllTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsView.swift; sourceTree = "<group>"; };
 		55B32F182E523C1E006DFA12 /* AllTransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsViewModel.swift; sourceTree = "<group>"; };
+		55B32F1A2E523E4D006DFA12 /* TransferRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				55B32F0D2E523A47006DFA12 /* Transaction.swift */,
 				55B32F062E5232B3006DFA12 /* AuthenticationRequest.swift */,
 				55B32F082E5232CC006DFA12 /* AuthenticationResponse.swift */,
+				55B32F1A2E523E4D006DFA12 /* TransferRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B32F1B2E523E4D006DFA12 /* TransferRequest.swift in Sources */,
 				53D4187C2AC7099A0070ADB1 /* AuraApp.swift in Sources */,
 				55B32F172E523C08006DFA12 /* AllTransactionsView.swift in Sources */,
 				53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */,
