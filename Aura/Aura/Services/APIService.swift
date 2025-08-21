@@ -11,13 +11,17 @@ class APIService {
     static let shared = APIService()
     private let baseURL = "http://127.0.0.1:8080"
     
-    // Token en UserDefaults (suffisant pour un MVP)
+    private let tokenQueue = DispatchQueue(label: "com.aura.tokenQueue")
+    private var _authToken: String?
+    
     var authToken: String? {
-        get { UserDefaults.standard.string(forKey: "authToken") }
-        set { UserDefaults.standard.set(newValue, forKey: "authToken") }
+        get { tokenQueue.sync { _authToken } }
+        set { tokenQueue.async(flags: .barrier) { self._authToken = newValue } }
     }
     
-    func login(email: String, password: String) async throws -> Bool {
+    var urlSession: URLSessionProtocol = URLSession.shared
+    
+    func login(email: String, password: String) async throws {
         let url = URL(string: "\(baseURL)/auth")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -26,10 +30,9 @@ class APIService {
         let body = AuthenticationRequest(username: email, password: password)
         request.httpBody = try JSONEncoder().encode(body)
         
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await urlSession.data(for: request)
         let response = try JSONDecoder().decode(AuthenticationResponse.self, from: data)
         
         authToken = response.token
-        return true
     }
 }

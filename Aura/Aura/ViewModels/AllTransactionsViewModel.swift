@@ -10,7 +10,10 @@ import Foundation
 class AllTransactionsViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
     
-    init() {
+    private let urlSession: URLSessionProtocol
+    
+    init(urlSession: URLSessionProtocol = URLSession.shared) {
+        self.urlSession = urlSession
         fetchAllTransactions()
     }
     
@@ -23,7 +26,7 @@ class AllTransactionsViewModel: ObservableObject {
             request.setValue(token, forHTTPHeaderField: "token")
             
             do {
-                let (data, _) = try await URLSession.shared.data(for: request)
+                let (data, _) = try await urlSession.data(for: request)
                 let response = try JSONDecoder().decode(AccountResponse.self, from: data)
                 
                 await MainActor.run {

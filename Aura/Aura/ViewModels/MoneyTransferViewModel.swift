@@ -25,7 +25,12 @@ class MoneyTransferViewModel: ObservableObject {
         }
         
         Task {
-            guard let token = APIService.shared.authToken else { return }
+            guard let token = APIService.shared.authToken else {
+                await MainActor.run {
+                    self.transferMessage = "Token d'authentification manquant"
+                }
+                return
+            }
             
             let url = URL(string: "http://127.0.0.1:8080/account/transfer")!
             var request = URLRequest(url: url)
@@ -37,13 +42,18 @@ class MoneyTransferViewModel: ObservableObject {
             request.httpBody = try? JSONEncoder().encode(transfer)
             
             do {
-                let (_, response) = try await URLSession.shared.data(for: request)
-                if let httpResponse = response as? HTTPURLResponse,
-                   httpResponse.statusCode == 200 {
-                    await MainActor.run {
-                        transferMessage = "Transfert réussi!"
-                        recipient = ""
-                        amount = ""
+                let (_, response) = try await APIService.shared.urlSession.data(for: request)
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        await MainActor.run {
+                            self.transferMessage = "Transfert réussi!"
+                            self.recipient = ""
+                            self.amount = ""
+                        }
+                    } else {
+                        await MainActor.run {
+                            self.transferMessage = "Échec du transfert: \(httpResponse.statusCode)"
+                        }
                     }
                 }
             } catch {

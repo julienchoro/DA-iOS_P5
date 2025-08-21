@@ -13,7 +13,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var showError = false
     @Published var errorMessage = ""
     
-    let onLoginSucceed: () -> Void
+    var onLoginSucceed: () -> Void
     
     init(_ callback: @escaping () -> Void) {
         self.onLoginSucceed = callback

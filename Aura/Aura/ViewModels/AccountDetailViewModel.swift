@@ -1,18 +1,28 @@
 //
-//  AccountDetailViewModel.swift
-//  Aura
+//  AccountDetailViewModelTests.swift
+//  AuraTests
 //
-//  Created by Vincent Saluzzo on 29/09/2023.
+//  Created by Test on 17/08/25.
 //
-
 import Foundation
+
+protocol URLSessionProtocol {
+    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+}
+
+extension URLSession: URLSessionProtocol {}
 
 class AccountDetailViewModel: ObservableObject {
     @Published var totalAmount = "€0.00"
     @Published var recentTransactions: [Transaction] = []
     
-    init() {
-        fetchAccountData()
+    private let urlSession: URLSessionProtocol
+    
+    init(urlSession: URLSessionProtocol = URLSession.shared) {
+        self.urlSession = urlSession
+        if APIService.shared.authToken != nil {
+            fetchAccountData()
+        }
     }
     
     func fetchAccountData() {
@@ -24,16 +34,27 @@ class AccountDetailViewModel: ObservableObject {
             request.setValue(token, forHTTPHeaderField: "token")
             
             do {
-                let (data, _) = try await URLSession.shared.data(for: request)
+                let (data, _) = try await urlSession.data(for: request)
                 let response = try JSONDecoder().decode(AccountResponse.self, from: data)
                 
                 await MainActor.run {
-                    totalAmount = "€\(response.currentBalance)"
+                    totalAmount = formatAsCurrency(response.currentBalance)
                     recentTransactions = Array(response.transactions.prefix(3))
                 }
             } catch {
                 print("Error: \(error)")
             }
         }
+    }
+    
+    private func formatAsCurrency(_ amount: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "€"
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.currencyGroupingSeparator = "\u{00a0}"
+        formatter.currencyDecimalSeparator = ","
+        return formatter.string(from: amount as NSDecimalNumber) ?? "€0.00"
     }
 }
